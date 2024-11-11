@@ -7,7 +7,7 @@ CONFORMITY = 6
 
 info = check_output(['git', '--no-replace-objects', 'cat-file', 'commit', 'HEAD'], cwd=LOC)
 
-validChars = ''.join(set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()[]{}<>$@#"\'\\+-*/~&!:;?%'))
+validChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()[]{}<>$@#"\'\\+-*/~&!:;?%'
 mx = len(validChars)-1
 
 c = [0]
@@ -30,7 +30,7 @@ def test():
     v = info[:-1] + bytes(s(),'utf-8') + b'\n'
     sh = sha1()
     sh.update(bytes(f'commit {len(v)}\0', 'ascii')+v)
-    return ''.join(map(lambda c:hex(c)[2:].ljust(2,'0'),sh.digest()))
+    return sh.hexdigest()
 
 while 1:
     t = test()
@@ -39,7 +39,5 @@ while 1:
         t = 'CONFORMS'
         if nz > CONFORMITY:
             t += ' +'+str(nz-CONFORMITY)
-        print(t)
-        print('\x1b[92;1m'+(b'\n'.join(info.splitlines()[4:])).decode('utf-8')+s()+'\x1b[39;22m')
-        print('END\n')
+        print(t+'\n\x1b[92;1m'+(b'\n'.join(info.splitlines()[4:])).decode('utf-8')+s()+'\x1b[39;22m\nEND\n')
     ind(0)
