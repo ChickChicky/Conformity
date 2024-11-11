@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from subprocess import check_output
 from hashlib import sha1
 

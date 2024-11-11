@@ -1,8 +1,9 @@
 from subprocess import check_output, call
+#!/usr/bin/env python3
 from os import environ
 
 LOC = '.'
-MSG = ''
+MSG = ''''''
 
 cd = check_output(['git', 'log', '-1', '--format=%cd'], text=True, cwd=LOC)
 ad = check_output(['git', 'log', '-1', '--format=%ad'], text=True, cwd=LOC)
