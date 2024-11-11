@@ -2,7 +2,7 @@ from subprocess import check_output
 from hashlib import sha1
 
 LOC = '.'
-CONFORMITY = 5
+CONFORMITY = 6
 
 info = check_output(['git', '--no-replace-objects', 'cat-file', 'commit', 'HEAD'], cwd=LOC)
 
@@ -25,14 +25,8 @@ def ind(i):
     else:
         c[i] += 1
 
-def inc():
-    ind(0)
-    
-def enc():
-    return info[:-1] + bytes(s(),'utf-8') + b'\n'
-
 def test():
-    v = enc()
+    v = info[:-1] + bytes(s(),'utf-8') + b'\n'
     sh = sha1()
     sh.update(bytes(f'commit {len(v)}\0', 'ascii')+v)
     return ''.join(map(lambda c:hex(c)[2:].ljust(2,'0'),sh.digest()))
@@ -45,6 +39,6 @@ while 1:
         if nz > CONFORMITY:
             t += ' +'+str(nz-CONFORMITY)
         print(t)
-        print('\x1b[92;1m'+(b'\n'.join(info.splitlines()[5:])).decode('utf-8')+s()+'\x1b[39;22m')
+        print('\x1b[92;1m'+(b'\n'.join(info.splitlines()[4:])).decode('utf-8')+s()+'\x1b[39;22m')
         print('END\n')
-    inc()
+    ind(0)
