@@ -1,5 +1,5 @@
-from subprocess import check_output, call
 #!/usr/bin/env python3
+from subprocess import check_output, call
 from os import environ
 
 LOC = '.'
@@ -10,4 +10,4 @@ ad = check_output(['git', 'log', '-1', '--format=%ad'], text=True, cwd=LOC)
 env = environ.copy()
 env['GIT_AUTHOR_DATE'] = ad
 env['GIT_COMMITTER_DATE'] = cd
-print(call(['git', 'commit', '--amend', '-m', MSG], cwd=LOC, env=env))
+print(call(['git', 'commit', '--allow-empty', '--amend', '-m', MSG], cwd=LOC, env=env))
